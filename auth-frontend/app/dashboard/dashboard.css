@@ -1,0 +1,33 @@
+.dash-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dash-card {
+  background: white;
+  padding: 40px;
+  width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.dash-card button {
+  margin-top: 20px;
+  padding: 8px 14px;
+  background: #ef4444;
+  border: none;
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.dash-card button:hover {
+  background: #b91c1c;
+}
+
+.loading {
+  text-align: center;
+  margin-top: 100px;
+}
