@@ -7,10 +7,13 @@ const logoutRoutes = require("./routes/logoutRoutes");
 
 const app = express();
 
-/* ========= CORS (🔥 MUST BE FIRST) ========= */
+/* ========= CORS (LOCAL + PROD SAFE) ========= */
 app.use(
   cors({
-    origin: "http://localhost:3000", // frontend
+    origin: [
+      "http://localhost:3000",
+      process.env.FRONTEND_URL,
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   })
@@ -23,5 +26,10 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api", dashboardRoutes);
 app.use("/api/logout", logoutRoutes);
+
+/* ========= HEALTH CHECK (RENDER IMPORTANT) ========= */
+app.get("/", (req, res) => {
+  res.send("Backend is live 🚀");
+});
 
 module.exports = app;
