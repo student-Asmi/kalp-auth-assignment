@@ -10,10 +10,9 @@
 //     console.log(`Server is running on port ${PORT}`);
 // });
 
+const app = require("./app");
 const mongoose = require("mongoose");
 require("dotenv").config();
-
-const app = require("./app");
 
 const PORT = process.env.PORT || 5000;
 
@@ -28,4 +27,5 @@ mongoose
   })
   .catch((err) => {
     console.error("MongoDB connection failed:", err);
+    process.exit(1);
   });
