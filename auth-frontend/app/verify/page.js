@@ -3,19 +3,33 @@
 export const dynamic = "force-dynamic";
 
 import { useEffect } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function VerifyPage() {
-  const params = useSearchParams();
-  const token = params.get("token");
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (!token) return;
+    const token = searchParams.get("token");
+    if (!token) {
+      router.replace("/login");
+      return;
+    }
 
-    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/verify-email?token=${token}`)
-      .then(() => router.push("/login"));
-  }, [token]);
+    fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/verify-email?token=${token}`
+    )
+      .then(() => {
+        router.replace("/login");
+      })
+      .catch(() => {
+        router.replace("/login");
+      });
+  }, [searchParams, router]);
 
-  return <p>Verifying email...</p>;
-}
+  return (
+    <div style={{ padding: 40 }}>
+      <h2>Verifying your email…</h2>
+      <p>Please wait</p>
+    </div>
+  );
