@@ -1,4 +1,7 @@
 "use client";
+
+export const dynamic = "force-dynamic";
+
 import { useEffect } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 
@@ -10,7 +13,7 @@ export default function VerifyPage() {
   useEffect(() => {
     if (!token) return;
 
-    fetch(`http://localhost:5000/api/auth/verify-email?token=${token}`)
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/verify-email?token=${token}`)
       .then(() => router.push("/login"));
   }, [token]);
 
