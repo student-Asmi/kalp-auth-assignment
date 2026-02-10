@@ -10,22 +10,27 @@
 //     console.log(`Server is running on port ${PORT}`);
 // });
 
-const app = require("./app");
+require("dotenv").config(); // 🔥 MUST BE FIRST
+
 const mongoose = require("mongoose");
-require("dotenv").config();
+const app = require("./app");
 
 const PORT = process.env.PORT || 5000;
 
-mongoose
-  .connect(process.env.MONGO_URI)
-  .then(() => {
+(async () => {
+  try {
+    if (!process.env.MONGO_URI) {
+      throw new Error("MONGO_URI is not defined");
+    }
+
+    await mongoose.connect(process.env.MONGO_URI);
     console.log("MongoDB connected successfully");
 
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
     });
-  })
-  .catch((err) => {
-    console.error("MongoDB connection failed:", err);
+  } catch (err) {
+    console.error("Startup error:", err.message);
     process.exit(1);
-  });
+  }
+})();
