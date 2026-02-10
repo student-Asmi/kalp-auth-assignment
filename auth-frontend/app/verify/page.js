@@ -11,6 +11,7 @@ export default function VerifyPage() {
 
   useEffect(() => {
     const token = searchParams.get("token");
+
     if (!token) {
       router.replace("/login");
       return;
@@ -25,7 +26,7 @@ export default function VerifyPage() {
       .catch(() => {
         router.replace("/login");
       });
-  }, [searchParams, router]);
+  }, [router, searchParams]);
 
   return (
     <div style={{ padding: 40 }}>
@@ -33,3 +34,4 @@ export default function VerifyPage() {
       <p>Please wait</p>
     </div>
   );
+}
