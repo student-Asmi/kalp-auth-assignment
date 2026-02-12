@@ -11,10 +11,15 @@ export default function Dashboard() {
     const token = localStorage.getItem("token");
     if (!token) return router.push("/login");
 
-    fetch("/api/dashboard", {
-      headers: { Authorization: `Bearer ${token}` },
+    fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/dashboard`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     })
-      .then(res => res.json())
+      .then(res => {
+        if (!res.ok) throw new Error();
+        return res.json();
+      })
       .then(setData)
       .catch(() => router.push("/login"));
   }, []);
